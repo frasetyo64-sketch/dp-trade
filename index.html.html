@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPTrade • Super Exclusive</title>
+
+<style>
+/* ==============================
+   RESET & BASE THEME
+=================================*/
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .4s, color .4s;
+}
+
+/* Light Theme */
+:root {
+    --bg: #f5f5f5;
+    --text: #111;
+    --card: rgba(255,255,255,0.55);
+    --glass-border: rgba(255,255,255,0.25);
+    --accent: #38bdf8;
+    --nav-bg: rgba(255,255,255,0.4);
+    --shadow: rgba(0,0,0,0.08);
+}
+
+/* Dark */
+body.dark {
+    --bg: #0f172a;
+    --text: #e2e8f0;
+    --card: rgba(30,41,59,0.55);
+    --glass-border: rgba(255,255,255,0.08);
+    --accent: #60a5fa;
+    --nav-bg: rgba(15,23,42,0.5);
+    --shadow: rgba(0,0,0,0.4);
+}
+
+/* AMOLED */
+body.amoled {
+    --bg: #000;
+    --text: #eee;
+    --card: rgba(10,10,10,0.6);
+    --glass-border: rgba(255,255,255,0.09);
+    --accent: #0ea5e9;
+    --nav-bg: rgba(0,0,0,0.6);
+    --shadow: rgba(255,255,255,0.08);
+}
+
+/* ==============================
+   LOADING SCREEN
+=================================*/
+#loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    z-index: 9999;
+    animation: fadeOut 1.3s ease forwards;
+    animation-delay: 1.8s;
+}
+
+.loader-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    animation: neon 1.4s infinite alternate;
+}
+
+@keyframes neon {
+    from { text-shadow: 0 0 4px #38bdf8, 0 0 12px #38bdf8; }
+    to   { text-shadow: 0 0 12px #38bdf8, 0 0 32px #38bdf8; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* ==============================
+   NAVBAR
+=================================*/
+nav {
+    position: fixed;
+    top: 0; width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    backdrop-filter: blur(12px);
+    background: var(--nav-bg);
+    z-index: 1000;
+}
+
+nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent);
+    text-shadow: 0 0 8px var(--accent);
+}
+
+nav a {
+    margin-left: 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+    opacity: .9;
+}
+
+nav a:hover { opacity: 1; }
+
+.theme-toggle {
+    margin-left: 20px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: var(--accent);
+    font-weight: bold;
+}
+
+/* ==============================
+   HERO PARALLAX
+=================================*/
+.hero {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1700&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 20px;
+    color: white;
+    position: relative;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 50px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    animation: fadeUp 1.2s ease;
+}
+
+.hero p {
+    font-size: 20px;
+    animation: fadeUp 1.7s ease;
+}
+
+.hero button {
+    margin-top: 30px;
+    padding: 14px 30px;
+    border: none;
+    background: var(--accent);
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: fadeUp 2.1s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================
+   SECTIONS + AOS
+=================================*/
+section {
+    max-width: 1100px;
+    margin: auto;
+    padding: 80px 20px;
+}
+
+.fade-scroll {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: .8s ease;
+}
+
+.fade-scroll.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==============================
+   CARDS
+=================================*/
+.card {
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px var(--shadow);
+    transition: 0.25s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* ==============================
+   CONTACT BOX
+=================================*/
+.contact-box {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+.contact-box a {
+    display: block;
+    margin: 10px auto;
+    color: var(--accent);
+    font-size: 20px;
+    text-decoration: none;
+}
+
+/* ==============================
+   FOOTER
+=================================*/
+footer {
+    padding: 25px;
+    text-align: center;
+    background: var(--nav-bg);
+    color: var(--text);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loader"><div class="loader-text">DPTrade</div></div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">DPTrade</div>
+    <div>
+        <a href="#about">Tentang</a>
+        <a href="#services">Layanan</a>
+        <a href="#contact">Kontak</a>
+        <button class="theme-toggle" onclick="toggleTheme()">Tema</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>DPTrade • Premium Digital Branding</h1>
+    <p>Membangun identitas modern, elegan, dan profesional.</p>
+    <button onclick="location.href='#contact'">Hubungi Sekarang</button>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="fade-scroll">
+    <h2>Tentang Saya</h2>
+    <p style="font-size:19px; line-height:1.8; margin-top:20px;">
+        Saya Derry Prasetyo, seorang trader yang meniti jalan panjang dari dunia binary hingga akhirnya
+        menemukan jati diri di forex trading. Sejak 2019 saya belajar bahwa psikologi dan pengendalian diri
+        adalah fondasi utama dalam dunia trading.
+    </p>
+
+    <h2>Misi DPTrade</h2>
+    <p>Menyebarkan edukasi forex dengan pendekatan realistis dan sederhana.</p>
+    <p>Mengajarkan pentingnya mindset dan kontrol emosi.</p>
+    <p>Menumbuhkan komunitas trader yang jujur, terbuka, dan suportif.</p>
+    <p>Bukan seberapa cepat kamu profit, tapi seberapa lama kamu bisa bertahan di pasar.</p>
+
+    <h2>Awal Mula di Dunia Trading</h2>
+    <p>
+        Perjalanan ini dimulai bukan dari ruang kelas atau seminar mahal, melainkan dari rasa penasaran
+        terhadap dunia finansial digital. Saya mulai mengenal trading melalui platform binary.
+    </p>
+
+    <h2>Kegagalan yang Membuka Mata</h2>
+    <p>
+        Binary trading mengajarkan banyak hal—termasuk bahwa cepat bukan berarti benar.
+    </p>
+
+    <h2>Hijrah ke Forex</h2>
+    <p>
+        Forex menawarkan lebih banyak kebebasan analisis, transparansi pasar, serta peluang lebih luas.
+    </p>
+
+    <h2>Perjalanan Menuju Konsistensi</h2>
+    <p>
+        Saya mulai mencatat setiap transaksi, menganalisa kesalahan, dan memperbaiki strategi secara bertahap.
+    </p>
+
+    <h2>Menemukan Makna di Balik Chart</h2>
+    <p>
+        Trading menjadi cerminan hidup: kesabaran, kedisiplinan, dan evaluasi berkelanjutan.
+    </p>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="fade-scroll">
+    <h2>Layanan Premium</h2>
+
+    <div style="display:grid; gap:30px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-top:40px;">
+
+        <div class="card">
+            <h3>Pembuatan Website</h3>
+            <p>Website eksklusif kualitas agensi kelas dunia.</p>
+        </div>
+
+        <div class="card">
+            <h3>Optimasi SEO</h3>
+            <p>Strategi modern untuk menaikkan ranking Google.</p>
+        </div>
+
+        <div class="card">
+            <h3>Bot Sosial Media</h3>
+            <p>Automasi komentar, like, dan jadwal posting.</p>
+        </div>
+
+        <div class="card">
+            <h3>Top Up Game & Voucher</h3>
+            <p>Proses cepat, aman, terpercaya.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-scroll">
+    <h2>Kontak Saya</h2>
+
+    <div class="contact-box">
+        <a href="mailto:frasetyo64@gmail.com">📧 Email: frasetyo64@gmail.com</a>
+        <a href="https://wa.me/6281295346107">📱 WhatsApp: 0812-9534-6107</a>
+        <a href="https://instagram.com/prasfx">📸 Instagram: @prasfx</a>
+    </div>
+</section>
+
+<footer>© 2025 DPTrade — Super Exclusive Edition</footer>
+
+<script>
+/* Fade Scroll */
+const faders = document.querySelectorAll(".fade-scroll");
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+});
+faders.forEach(el => observer.observe(el));
+
+/* Theme Cycle */
+function toggleTheme() {
+    if (document.body.classList.contains("dark")) {
+        document.body.classList.remove("dark");
+        document.body.classList.add("amoled");
+    } else if (document.body.classList.contains("amoled")) {
+        document.body.classList.remove("amoled");
+    } else {
+        document.body.classList.add("dark");
+    }
+}
+</script>
+
+</body>
+</html>
